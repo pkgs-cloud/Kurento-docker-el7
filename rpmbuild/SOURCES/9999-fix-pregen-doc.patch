@@ -1,0 +1,98 @@
+From 7c94c0568e3c4a4db49f2a99ff297f7b3efe84e4 Mon Sep 17 00:00:00 2001
+From: Thomas Haller <thaller@redhat.com>
+Date: Mon, 18 Jun 2018 14:01:36 +0200
+Subject: [PATCH] patch documentation with the proper default values
+
+We don't regenerate the documentation for RHEL builds, but
+the docs from the tarball are generated with a certain set
+of defaults.
+
+Patch the man pages with the proper values.
+---
+ docs/api/html/NetworkManager.conf.html | 8 ++++----
+ man/NetworkManager.conf.5              | 8 ++++----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/docs/api/html/NetworkManager.conf.html b/docs/api/html/NetworkManager.conf.html
+index ae2b1081e..6e5282b2a 100644
+--- a/docs/api/html/NetworkManager.conf.html
++++ b/docs/api/html/NetworkManager.conf.html
+@@ -180,7 +180,7 @@ plugins-=remove-me
+         clients to be installed. The <code class="literal">internal</code>
+         option uses a built-in DHCP client which is not currently as
+         featureful as the external clients.</p>
+-<p>If this key is missing, it defaults to <code class="literal">internal</code>.
++<p>If this key is missing, it defaults to <code class="literal">dhclient</code>.
+         It the chosen plugin is not available, clients are looked for
+         in this order: <code class="literal">dhclient</code>, <code class="literal">dhcpcd</code>,
+         <code class="literal">internal</code>.</p>
+@@ -339,7 +339,7 @@ no-auto-default=*
+ <p>Set the <code class="filename">resolv.conf</code>
+         management mode. The default value depends on NetworkManager build
+         options, and this version of NetworkManager was build with a default of
+-        "<code class="literal">symlink</code>".
++        "<code class="literal">file</code>".
+         Regardless of this setting, NetworkManager will
+         always write resolv.conf to its runtime state directory
+         <code class="filename">/var/run/NetworkManager/resolv.conf</code>.</p>
+@@ -625,7 +625,7 @@ ipv6.ip6-privacy=0
+ </tr>
+ <tr>
+ <td><p><span class="term"><code class="varname">ethernet.cloned-mac-address</code></span></p></td>
+-<td><p>If left unspecified, it defaults to "preserve".</p></td>
++<td><p>If left unspecified, it defaults to "permanent".</p></td>
+ </tr>
+ <tr>
+ <td><p><span class="term"><code class="varname">ethernet.generate-mac-address-mask</code></span></p></td>
+@@ -703,7 +703,7 @@ ipv6.ip6-privacy=0
+ </tr>
+ <tr>
+ <td><p><span class="term"><code class="varname">wifi.cloned-mac-address</code></span></p></td>
+-<td><p>If left unspecified, it defaults to "preserve".</p></td>
++<td><p>If left unspecified, it defaults to "permanent".</p></td>
+ </tr>
+ <tr>
+ <td><p><span class="term"><code class="varname">wifi.generate-mac-address-mask</code></span></p></td>
+diff --git a/man/NetworkManager.conf.5 b/man/NetworkManager.conf.5
+index 26b31e1bd..058177719 100644
+--- a/man/NetworkManager.conf.5
++++ b/man/NetworkManager.conf.5
+@@ -145,7 +145,7 @@ internal
+ option uses a built\-in DHCP client which is not currently as featureful as the external clients\&.
+ .sp
+ If this key is missing, it defaults to
+-internal\&. It the chosen plugin is not available, clients are looked for in this order:
++dhclient\&. It the chosen plugin is not available, clients are looked for in this order:
+ dhclient,
+ dhcpcd,
+ internal\&.
+@@ -254,7 +254,7 @@ rc\-manager\ \&unmanaged
+ .RS 4
+ Set the
+ resolv\&.conf
+-management mode\&. The default value depends on NetworkManager build options, and this version of NetworkManager was build with a default of "symlink"\&. Regardless of this setting, NetworkManager will always write resolv\&.conf to its runtime state directory
++management mode\&. The default value depends on NetworkManager build options, and this version of NetworkManager was build with a default of "file"\&. Regardless of this setting, NetworkManager will always write resolv\&.conf to its runtime state directory
+ /var/run/NetworkManager/resolv\&.conf\&.
+ .sp
+ symlink: If
+@@ -607,7 +607,7 @@ If left unspecified, the default value is 3 tries before failing the connection\
+ .PP
+ \fIethernet\&.cloned\-mac\-address\fR
+ .RS 4
+-If left unspecified, it defaults to "preserve"\&.
++If left unspecified, it defaults to "permanent"\&.
+ .RE
+ .PP
+ \fIethernet\&.generate\-mac\-address\-mask\fR
+@@ -688,7 +688,7 @@ If left unspecified, default value of 60 seconds is used\&.
+ .PP
+ \fIwifi\&.cloned\-mac\-address\fR
+ .RS 4
+-If left unspecified, it defaults to "preserve"\&.
++If left unspecified, it defaults to "permanent"\&.
+ .RE
+ .PP
+ \fIwifi\&.generate\-mac\-address\-mask\fR
+-- 
+2.17.0
+

@@ -1,0 +1,14 @@
+diff -up boost_1_55_0/boost/program_options/variables_map.hpp\~ boost_1_55_0/boost/program_options/variables_map.hpp
+--- boost_1_55_0/boost/program_options/variables_map.hpp~	2012-04-08 12:02:26.000000000 +0200
++++ boost_1_55_0/boost/program_options/variables_map.hpp	2014-05-13 17:49:18.219749093 +0200
+@@ -98,7 +98,7 @@ namespace boost { namespace program_opti
+         void store(const basic_parsed_options<char>& options, 
+               variables_map& m, bool);
+ 
+-        friend BOOST_PROGRAM_OPTIONS_DECL class variables_map;
++        friend class BOOST_PROGRAM_OPTIONS_DECL variables_map;
+     };
+ 
+     /** Implements string->string mapping with convenient value casting
+
+Diff finished.  Tue May 13 17:49:22 2014

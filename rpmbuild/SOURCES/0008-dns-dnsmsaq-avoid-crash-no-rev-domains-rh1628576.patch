@@ -1,0 +1,42 @@
+From 3a040f04f5c32639092ea5e427675df2a1830704 Mon Sep 17 00:00:00 2001
+From: Beniamino Galvani <bgalvani@redhat.com>
+Date: Thu, 13 Sep 2018 14:50:32 +0200
+Subject: [PATCH] dns: dnsmasq: avoid crash when no reverse domains exist
+
+ip_data->domains.reverse can be NULL when the device is being removed
+and has no IP configuration for a short moment.
+
+Fixes: 6409e7719c0341baedfdb063366457e390894ed9
+
+https://bugzilla.gnome.org/show_bug.cgi?id=797022
+(cherry picked from commit f0c075f05082e4c77fac75ad06d303e7538e4fc7)
+(cherry picked from commit 8309a7a6964d3677e0705046fb2f91810ef3ab65)
+(cherry picked from commit 3abddc3328e7896f7af137ec9d74db86c27b3302)
+---
+ src/dns/nm-dns-dnsmasq.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/src/dns/nm-dns-dnsmasq.c b/src/dns/nm-dns-dnsmasq.c
+index b5b93280d..91f4c55bd 100644
+--- a/src/dns/nm-dns-dnsmasq.c
++++ b/src/dns/nm-dns-dnsmasq.c
+@@ -183,10 +183,12 @@ add_ip_config (NMDnsDnsmasq *self, GVariantBuilder *servers, const NMDnsIPConfig
+ 			                        domain[0] ? domain : NULL);
+ 		}
+ 
+-		for (j = 0; ip_data->domains.reverse[j]; j++) {
+-			add_dnsmasq_nameserver (self, servers,
+-			                        ip_addr_to_string_buf,
+-			                        ip_data->domains.reverse[j]);
++		if (ip_data->domains.reverse) {
++			for (j = 0; ip_data->domains.reverse[j]; j++) {
++				add_dnsmasq_nameserver (self, servers,
++				                        ip_addr_to_string_buf,
++				                        ip_data->domains.reverse[j]);
++			}
+ 		}
+ 	}
+ }
+-- 
+2.17.1
+

@@ -1,0 +1,25 @@
+From 7b125e2e70c9de222feccae4e8931f943c8ef0cc Mon Sep 17 00:00:00 2001
+From: rpm-build <rpm-build>
+Date: Sat, 21 Mar 2015 11:16:29 -0400
+Subject: [PATCH] Revert "gmain: Warn when g_source_remove() fails"
+
+---
+ glib/gmain.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/glib/gmain.c b/glib/gmain.c
+index 30fac70..c5f5218 100644
+--- a/glib/gmain.c
++++ b/glib/gmain.c
+@@ -2237,8 +2237,6 @@ g_source_remove (guint tag)
+   source = g_main_context_find_source_by_id (NULL, tag);
+   if (source)
+     g_source_destroy (source);
+-  else
+-    g_critical ("Source ID %u was not found when attempting to remove it", tag);
+ 
+   return source != NULL;
+ }
+-- 
+1.8.3.1
+
