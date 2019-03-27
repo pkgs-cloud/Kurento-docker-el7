@@ -52,3 +52,22 @@
 	cd && chmod +x install-kurento.sh && ./install-kurento.sh
 	```
 	
+### Running Kurento on CentOS/RHEL 7
+
+* To start, stop, restart, enable, disable Kurento Media Server service
+
+	```
+	systemctl start|stop|restart|enable|disable kms
+	```
+
+* Make sure to allow connections to the port range used by Kurento or disable firewall completely when testing
+
+	```
+	systemctl stop firewalld ; systemctl disable firewalld
+	```
+
+* Config files are in `/etc/kurento` folder
+
+* The log files are under `/var/log/kurento` folder
+
+* Startup environment variables and arguments are in `/etc/sysconfig/kms` file
