@@ -7,8 +7,10 @@ Release: 1%{?dist}
 License: MIT
 Group: Applications/Communications
 URL: https://github.com/Kurento/jsoncpp
-Source0: Kurento-jsoncpp-%{commit}.tar.gz
+#Source0: Kurento-jsoncpp-%{commit}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
+
+BuildRequires: cmake
 
 
 %description
@@ -28,8 +30,11 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q -n Kurento-jsoncpp-%{commit}
-
+%setup -c -n %{name}-%{version} -T -D
+if [ ! -d .git ]; then
+    git clone https://github.com/Kurento/jsoncpp.git .
+    git checkout %{commit}
+fi
 
 %build
 mkdir -p build

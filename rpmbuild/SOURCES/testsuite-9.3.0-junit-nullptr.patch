@@ -1,0 +1,11 @@
+--- testsuite-9.3.0/src/JUnitOutputDriver.cpp.nullptr	2016-12-19 14:55:38.000000000 -0800
++++ testsuite-9.3.0/src/JUnitOutputDriver.cpp	2017-02-15 11:19:22.628056889 -0800
+@@ -35,7 +35,7 @@ void JUnitOutputDriver::startNewTest(std
+         {
+             std::stringstream suitename;
+             suitename << last_group->modname;
+-            if(last_group->mutatee != '\0') suitename << "." << last_group->mutatee;
++            if(last_group->mutatee != nullptr) suitename << "." << last_group->mutatee;
+             log(HUMAN, "<testsuite name=\"%s\" errors=\"%d\" skipped=\"%d\" tests=\"%d\" failures=\"%d\">\n",
+                 suitename.str().c_str(), group_errors, group_skips, group_tests, group_failures);
+             log(HUMAN, group_output.str().c_str());

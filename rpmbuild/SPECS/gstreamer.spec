@@ -1,4 +1,3 @@
-%global kms_version kms6.9.1
 %define commit 0592915
 
 %define		gstreamer	kms-gstreamer1
@@ -16,7 +15,7 @@ License: 	LGPL
 URL:		http://gstreamer.freedesktop.org/
 #Source: 	http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-%{version}.tar.xz
 #Source:		gstreamer-%{kms_version}.tar.gz
-Source:		Kurento-gstreamer-%{commit}.tar.gz
+#Source:		Kurento-gstreamer-%{commit}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Conflicts:	gstreamer1
@@ -75,12 +74,8 @@ applications and plugins for GStreamer, as well as general and API
 documentation.
 
 %prep
-#%setup -q -n Kurento-gstreamer-%{commit}
-#%setup -q -n gstreamer
-%setup -c -n Kurento-gstreamer -T -D
+%setup -c -n %{name}-%{version}-%{commit} -T -D
 if [ ! -d .git ]; then
-#    mkdir Kurento-gstreamer
-#    cd Kurento-gstreamer
     git clone https://github.com/Kurento/gstreamer.git .
     git checkout %{commit}
 fi
@@ -117,6 +112,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 # Create empty cache directory
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/cache/gstreamer-%{majorminor}
+
+ln -sf %{_libdir}/pkgconfig/gstreamer-%{majorminor}.pc $RPM_BUILD_ROOT%{_libdir}/pkgconfig/gstreamer-1.0.pc
+ln -sf %{_libdir}/pkgconfig/gstreamer-base-%{majorminor}.pc $RPM_BUILD_ROOT%{_libdir}/pkgconfig/gstreamer-base-1.0.pc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -188,6 +186,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/gstreamer-controller-%{majorminor}.pc
 %{_libdir}/pkgconfig/gstreamer-check-%{majorminor}.pc
 %{_libdir}/pkgconfig/gstreamer-net-%{majorminor}.pc
+
+%{_libdir}/pkgconfig/gstreamer-1.0.pc
+%{_libdir}/pkgconfig/gstreamer-base-1.0.pc
 
 #%doc %{_datadir}/gtk-doc/html/gstreamer-%{majorminor}/*
 #%doc %{_datadir}/gtk-doc/html/gstreamer-libs-%{majorminor}/*

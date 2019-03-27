@@ -1,4 +1,3 @@
-%global kms_version kms6.9.1
 %define commit 330b773
 
 %define majorminor  1.5
@@ -16,7 +15,7 @@ License: 	LGPL
 URL:		http://gstreamer.freedesktop.org/
 Vendor:         GStreamer Backpackers Team <package@gstreamer.freedesktop.org>
 #Source:         http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-%{version}.tar.xz
-Source:         gst-plugins-base-%{kms_version}.tar.gz
+#Source:         gst-plugins-base-%{kms_version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires: 	%{gstreamer} >= %{gst_minver}
@@ -58,11 +57,10 @@ types or processing capabilities can be added simply by installing new
 plug-ins.
 
 %prep
-#%setup -q -n gst-plugins-base-%{version}
-%setup -c -n gst-plugins-base-%{kms_version} -T -D
+%setup -c -n %{name}-%{version}-%{commit} -T -D
 if [ ! -d .git ]; then
     git clone https://github.com/Kurento/gst-plugins-base.git .
-    git commit %{commit}
+    git checkout %{commit}
 fi
 export DOCS_ARE_INCOMPLETE_PLEASE_FIXME=0
 

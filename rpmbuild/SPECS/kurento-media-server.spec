@@ -1,4 +1,4 @@
-%define commit 46086bf
+%define commit 0a5e285
 
 Summary: Kurento Media Server
 Name: kurento-media-server
@@ -7,7 +7,7 @@ Release: 1%{?dist}
 License: Apache 2.0
 Group: Applications/Communications
 URL: https://github.com/Kurento/kurento-media-server
-Source0: Kurento-kurento-media-server-%{commit}.tar.gz
+#Source0: Kurento-kurento-media-server-%{commit}.tar.gz
 Source1: kms.service
 Source2: kms.sysconfig
 #Patch0: loadConfig.cpp.patch
@@ -43,9 +43,12 @@ the resource consumption. It provides the following features:
   by GStreamer including VP8, H.264, H.263, AMR, OPUS, Speex, G.711, etc.
 
 %prep
-%setup -q -n Kurento-%{name}-%{commit}
+%setup -c -n %{name}-%{version}-%{commit} -T -D
 #%patch0
-
+if [ ! -d .git ]; then
+    git clone https://github.com/Kurento/%{name}.git .
+    git checkout %{commit}
+fi
 
 %build
 mkdir -p build

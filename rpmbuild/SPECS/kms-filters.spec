@@ -1,4 +1,4 @@
-%define commit 5382f6c
+%define commit be01bd1
 
 Summary: Filter elements for Kurento Media Server
 Name: kms-filters
@@ -7,7 +7,7 @@ Release: 1%{?dist}
 License: Apache 2.0
 Group: Applications/Communications
 URL: https://github.com/Kurento/kms-filters
-Source0: Kurento-%{name}-%{commit}.tar.gz
+#Source0: Kurento-%{name}-%{commit}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Requires: kms-core kms-elements
 BuildRequires: kms-core-devel kms-elements-devel
@@ -27,8 +27,11 @@ Requires: pkgconfig
 The kms-filters project contains filter elements for the Kurento Media Server
 
 %prep
-%setup -q -n Kurento-%{name}-%{commit}
-
+%setup -c -n %{name}-%{version}-%{commit} -T -D
+if [ ! -d .git ]; then
+    git clone https://github.com/Kurento/%{name}.git .
+    git checkout %{commit}
+fi
 
 %build
 mkdir -p build

@@ -1,4 +1,4 @@
-%define		commit d408e63
+%define		commit b5cbdf8
 
 Summary: Kurento cmake utilities
 Name: kms-cmake-utils
@@ -7,7 +7,7 @@ Release: 1%{?dist}
 License: GPLv2+
 Group: Development/Libraries
 URL: https://github.com/Kurento/kms-cmake-utils
-Source0: Kurento-%{name}-%{commit}.tar.gz
+#Source0: Kurento-%{name}-%{commit}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Requires: cmake >= 2.8
 BuildRequires: cmake >= 2.8
@@ -16,8 +16,11 @@ BuildRequires: cmake >= 2.8
 Common CMake utilities for Kurento projects
 
 %prep
-%setup -q -n Kurento-%{name}-%{commit}
-
+%setup -c -n %{name}-%{version}-%{commit} -T -D
+if [ ! -d .git ]; then
+    git clone https://github.com/Kurento/%{name}.git .
+    git checkout %{commit}
+fi
 
 %build
 mkdir -p build

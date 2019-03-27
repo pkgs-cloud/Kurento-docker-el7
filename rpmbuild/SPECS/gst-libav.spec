@@ -1,4 +1,4 @@
-%global kms_version kms6.9.1
+%define commit b33143e
 
 %define majorminor  1.5
 %define gstreamer   kms-gstreamer1
@@ -6,7 +6,7 @@
 %define gst_majorminor  1.0
 
 Name: 		%{gstreamer}-libav
-Version: 	1.8.2.1
+Version: 	1.8.1
 Release:	1
 Summary: 	GStreamer Streaming-media framework plug-in using libav (FFmpeg).
 Group: 		Libraries/Multimedia
@@ -14,7 +14,6 @@ License: 	LGPL
 URL:		http://gstreamer.net/
 Vendor:		GStreamer Backpackers Team <package@gstreamer.net>
 #Source:		http://gstreamer.freedesktop.org/src/gst-ffmpeg/gst-ffmpeg/gst-libav-%{version}.tar.xz
-Source:         gst-libav-%{kms_version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires:  	%{gstreamer} >= 1.0.0
@@ -33,13 +32,11 @@ This plugin contains the libav (formerly FFmpeg) codecs, containing codecs for m
 multimedia formats.
 
 %prep
-#%setup -q -n gst-libav-%{kms_version}
-%setup -c -n gst-libav-%{kms_version} -T -D
+%setup -c -n %{name}-%{version}-%{commit} -T -D
 if [ ! -d .git ]; then
     git clone https://github.com/Kurento/gst-libav.git .
     git checkout %{commit}
 fi
-#%setup -q -n gst-libav
 
 %build
 ./autogen.sh

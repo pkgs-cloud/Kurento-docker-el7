@@ -1,4 +1,3 @@
-%global kms_version kms6.9.1
 %define commit 1d80706
 
 %define majorminor   1.5
@@ -16,7 +15,7 @@ License: LGPLv2+ and LGPLv2
 Group: Applications/Multimedia
 URL: http://gstreamer.freedesktop.org/
 #Source: http://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-%{version}.tar.xz
-Source: gst-plugins-bad-%{kms_version}.tar.gz
+#Source: gst-plugins-bad-%{kms_version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires: %{gstreamer} >= %{gst_minver}
@@ -168,13 +167,11 @@ aren't tested well enough, or the code is not of good enough quality.
 
 
 %prep
-#%setup -q -n gst-plugins-bad-%{kms_version}
-%setup -c -n gst-plugins-bad-%{kms_version} -T -D
+%setup -c -n %{name}-%{version}-%{commit} -T -D
 if [ ! -d .git ]; then
     git clone https://github.com/Kurento/gst-plugins-bad.git .
     git checkout %{commit}
 fi
-#%setup -q -n gst-plugins-bad
 
 %build
 ./autogen.sh

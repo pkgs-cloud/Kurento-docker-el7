@@ -1,4 +1,4 @@
-%define commit db430dc
+%define commit 1a3a755
 
 Summary: Kurento Module Creator
 Name: kurento-module-creator
@@ -7,10 +7,8 @@ Release: 1%{?dist}
 License: Apache 2.0
 Group: Development/Tools
 URL: https://github.com/Kurento/kurento-module-creator
-Source0: Kurento-%{name}-%{commit}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Requires: cmake >= 2.8
-#Requires: java
 BuildRequires: maven >= 3.0
 
 %description
@@ -18,7 +16,11 @@ The kurento-module-creator project contains a processor that will
 generate code for RPC between the Kurento Media Server and remote libraries
 
 %prep
-%setup -q -n Kurento-%{name}-%{commit}
+%setup -c -n %{name}-%{version}-%{commit} -T -D
+if [ ! -d .git ]; then
+    git clone https://github.com/Kurento/%{name}.git .
+    git checkout %{commit}
+fi
 
 %build
 mvn package

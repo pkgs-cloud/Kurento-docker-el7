@@ -8,7 +8,7 @@ Summary:	An implementation of the Secure Real-time Transport Protocol (SRTP)
 Group:		System Environment/Libraries
 License:	BSD
 URL:		https://github.com/Kurento/libsrtp
-Source0:	Kurento-libsrtp-%{commit}.tar.gz
+#Source0:	Kurento-libsrtp-%{commit}.tar.gz
 # Universal config.h
 #Source2:	config.h
 # Fix shared lib so ldconfig doesn't complain
@@ -35,11 +35,15 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q -n Kurento-libsrtp-%{commit}
 #%patch0 -p1 -b .sharedfix
 #%patch1 -p1 -b .srtp_aes_encrypt
 #%patch2 -p1 -b .sha1-name-fix
 #%patch3 -p1 -b .mips-name-fix
+%setup -c -n %{name}-%{version} -T -D
+if [ ! -d .git ]; then
+    git clone https://github.com/Kurento/libsrtp.git .
+    git checkout %{commit}
+fi
 
 %if 0%{?rhel} > 0
 %ifarch ppc64

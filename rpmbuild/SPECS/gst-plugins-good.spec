@@ -1,5 +1,4 @@
-%global kms_version kms6.9.1
-%define commit f84793a
+%define commit 3f3b3c4
 
 %define majorminor  1.5
 %define gstreamer   kms-gstreamer1
@@ -16,7 +15,7 @@ License: 	LGPL
 URL:		http://gstreamer.freedesktop.org/
 Vendor:         GStreamer Backpackers Team <package@gstreamer.freedesktop.org>
 #Source:         http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-%{version}.tar.xz
-Source:         gst-plugins-good-%{kms_version}.tar.gz
+#Source:         gst-plugins-good-%{kms_version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires: 	  %{gstreamer} >= %{gst_minver}
@@ -38,7 +37,7 @@ BuildRequires: speex-devel
 #BuildRequires: libdc1394-devel
 #BuildRequires: libiec61883-devel  
 #BuildRequires: libraw1394-devel
-#BuildRequires: cairo-gobject-devel
+BuildRequires: cairo-gobject-devel
 BuildRequires: gdk-pixbuf2-devel
 BuildRequires: taglib-devel
 BuildRequires: libsoup-devel >= 2.50
@@ -55,13 +54,11 @@ types or processing capabilities can be added simply by installing new
 plug-ins.
 
 %prep
-#%setup -q -n gst-plugins-good-%{kms_version}
-%setup -c -n gst-plugins-good-%{kms_version} -T -D
+%setup -c -n %{name}-%{version}-%{commit} -T -D
 if [ ! -d .git ]; then
     git clone https://github.com/Kurento/gst-plugins-good.git .
     git checkout %{commit}
 fi
-#%setup -q -n gst-plugins-good
 
 %build
 ./autogen.sh

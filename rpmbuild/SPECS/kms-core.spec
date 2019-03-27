@@ -1,4 +1,4 @@
-%define commit 89dec33
+%define commit 2e8601a
 
 Summary: Core library of Kurento Media Server
 Name: kms-core
@@ -7,7 +7,7 @@ Release: 1%{?dist}
 License: GPLv2+
 Group: Applications/Communications
 URL: https://github.com/Kurento/kms-core
-Source0: Kurento-%{name}-%{commit}.tar.gz
+#Source0: Kurento-%{name}-%{commit}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Requires: kms-jsonrpc kms-jsoncpp
 BuildRequires: kms-jsonrpc-devel kms-jsoncpp-devel kms-cmake-utils kurento-module-creator
@@ -34,8 +34,11 @@ Requires: pkgconfig
 Development files for %{name}
 
 %prep
-%setup -q -n Kurento-%{name}-%{commit}
-
+%setup -c -n %{name}-%{version}-%{commit} -T -D
+if [ ! -d .git ]; then
+    git clone https://github.com/Kurento/%{name}.git .
+    git checkout %{commit}
+fi
 
 %build
 mkdir -p build

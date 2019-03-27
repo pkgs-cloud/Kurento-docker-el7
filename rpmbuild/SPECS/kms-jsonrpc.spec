@@ -1,4 +1,4 @@
-%define commit f5fb1d3
+%define commit 8e48ee4
 
 Summary: Kurento JsonRPC protocol implementation
 Name: kms-jsonrpc
@@ -7,7 +7,7 @@ Release: 1%{?dist}
 License: GPLv2+
 Group: Applications/Communications
 URL: https://github.com/Kurento/kms-jsonrpc
-Source0: Kurento-kms-jsonrpc-%{commit}.tar.gz
+#Source0: Kurento-kms-jsonrpc-%{commit}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Requires: kms-jsoncpp
 BuildRequires: kms-cmake-utils
@@ -28,8 +28,11 @@ Requires: pkgconfig
 Kurento JsonRPC protocol implementation
 
 %prep
-%setup -q -n Kurento-kms-jsonrpc-%{commit}
-
+%setup -c -n %{name}-%{version}-%{commit} -T -D
+if [ ! -d .git ]; then
+    git clone https://github.com/Kurento/%{name}.git .
+    git checkout %{commit}
+fi
 
 %build
 mkdir -p build

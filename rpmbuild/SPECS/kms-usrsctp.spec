@@ -1,4 +1,3 @@
-%define         kms_version kms6.9.1
 %define		commit fd1d0e6
 
 Summary: Kurento SCTP user-land implementation
@@ -8,7 +7,7 @@ Release: 1%{?dist}
 License: GPLv2+
 Group: Applications/Communications
 URL: https://github.com/Kurento/usrsctp
-Source0: Kurento-usrsctp-%{commit}.tar.gz
+#Source0: Kurento-usrsctp-%{commit}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 #Requires: 
 #BuildRequires: 
@@ -30,7 +29,11 @@ support for multihoming that runs on top of IP or UDP, and supports
 both v4 and v6 versions
 
 %prep
-%setup -q -n Kurento-usrsctp-%{commit}
+%setup -c -n %{name} -T -D
+if [ ! -d .git ]; then
+    git clone https://github.com/Kurento/usrsctp.git .
+    git checkout %{commit}
+fi
 
 %build
 ./bootstrap

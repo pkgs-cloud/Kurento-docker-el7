@@ -1,4 +1,3 @@
-%global kms_version kms6.9.1
 %define commit bed8b07
 
 %define majorminor  1.5
@@ -16,7 +15,7 @@ License: 	LGPL
 URL:		http://gstreamer.freedesktop.org/
 Vendor:         GStreamer Backpackers Team <package@gstreamer.freedesktop.org>
 #Source:         http://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-%{version}.tar.xz
-Source:         gst-plugins-ugly-%{kms_version}.tar.gz
+#Source:         gst-plugins-ugly-%{kms_version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires: 	%{gstreamer} >= %{gst_minver}
@@ -76,13 +75,11 @@ gstreamer-plugins-good because:
 # This package contains development files and documentation.
 
 %prep
-#%setup -q -n gst-plugins-ugly-%{kms_version}
-%setup -c -n gst-plugins-ugly-%{kms_version} -T -D
+%setup -c -n %{name}-%{version}-%{commit} -T -D
 if [ ! -d .git ]; then
     git clone https://github.com/Kurento/gst-plugins-ugly.git .
     git checkout %{commit}
 fi
-#%setup -q -n gst-plugins-ugly
 
 %build
 ./autogen.sh

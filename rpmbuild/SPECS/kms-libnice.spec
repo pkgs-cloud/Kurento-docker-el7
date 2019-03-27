@@ -1,15 +1,14 @@
-%define         kms_version kms6.9.1
 %define         commit aa63a59
 
 Name:           kms-libnice
-Version:        0.1.15.1
+Version:        0.1.15
 Release:        1%{?dist}
 Summary:        Kurento GLib ICE implementation
 
 Group:          System Environment/Libraries
 License:        LGPLv2 and MPLv1.1
 URL:            https://github.com/Kurento/libnice
-Source0:        Kurento-libnice-%{commit}.tar.gz
+#Source0:        Kurento-libnice-%{commit}.tar.gz
 
 BuildRequires:	glib2-devel >= 2.44
 BuildRequires:  kms-gstreamer1-devel
@@ -43,16 +42,19 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n Kurento-libnice-%{commit}
-
+%setup -c -n %{name}-%{version}-%{commit} -T -D
+if [ ! -d .git ]; then
+    git clone https://github.com/Kurento/libnice.git .
+    git checkout %{commit}
+fi
 
 %check
 #make check
 
 
 %build
-./autogen.sh
-%configure --disable-static
+./autogen.sh --disable-static --with-crypto-library=openssl --with-gstreamer
+%configure --disable-static --with-crypto-library=openssl --with-gstreamer
 #sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 #sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 make %{?_smp_mflags}
@@ -61,6 +63,7 @@ make %{?_smp_mflags}
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+mv $RPM_BUILD_ROOT/usr/lib64/gstreamer-1.0 $RPM_BUILD_ROOT/usr/lib64/gstreamer-1.5
 
 
 %post -p /sbin/ldconfig
@@ -72,7 +75,7 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %files
 #%doc NEWS README COPYING COPYING.LGPL COPYING.MPL
 %{_bindir}/*
-#%{_libdir}/gstreamer-1.5/*.so
+%{_libdir}/gstreamer-1.5/*.so
 %{_libdir}/*.so.*
 
 

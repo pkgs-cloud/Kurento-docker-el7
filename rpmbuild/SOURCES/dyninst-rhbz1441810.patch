@@ -1,0 +1,18 @@
+Fix for handling regions that have no disk backing
+
+--- dyninst-9.3.1/dyninstAPI/src/binaryEdit.h
++++ dyninst-9.3.1/dyninstAPI/src/binaryEdit.h
+@@ -258,8 +258,12 @@ class memoryTracker : public codeRange {
+     memoryTracker(Address a, unsigned s, void *b) :
+     alloced(false), dirty(false), a_(a), s_(s)
+         {
+-            b_ = malloc(s_);
+-            memcpy(b_, b, s_);
++            if(b) {
++                b_ = malloc(s_);
++                memcpy(b_, b, s_);
++            } else {
++                b_ = calloc(1, s_);
++            }
+         }
+     ~memoryTracker() { free(b_); }

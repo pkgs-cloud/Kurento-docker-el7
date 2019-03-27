@@ -1,5 +1,4 @@
-%define         kms_version kms6.9.1
-#%define         kms_name openwebrtc-gst-plugins
+%define		commit 6a0d22d
 
 Name:           kms-openwebrtc-gst-plugins
 Version:        0.10.0
@@ -9,7 +8,7 @@ Summary:        OpenWebRTC specific GStreamer plugins
 Group:          System Environment/Libraries
 License:        LGPLv2 and MPLv1.1
 URL:            https://github.com/Kurento/openwebrtc-gst-plugins
-Source0:        %{kms_name}-%{kms_version}.tar.gz
+#Source0:        %{kms_name}-%{kms_version}.tar.gz
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
@@ -33,7 +32,7 @@ Group:          Development/Libraries
 Requires:       %{name} = %{version}-%{release}
 #Requires:	glib2-devel >= 2.44
 Requires:	pkgconfig
-Provides:	%{kms_name}-devel
+Provides:	%{name}-devel
 
 
 %description    devel
@@ -42,10 +41,10 @@ developing applications that use %{name}.
 
 
 %prep
-#%setup -q -n %{kms_name}-%{kms_version}
-%setup -c -n %{kms_name}-%{kms_version} -T -D
+%setup -c -n %{name}-%{version}-%{commit} -T -D
 if [ ! -d .git ]; then
     git clone https://github.com/Kurento/openwebrtc-gst-plugins.git .
+    git checkout %{commit}
 fi
 
 %check

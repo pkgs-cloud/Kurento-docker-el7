@@ -1,4 +1,4 @@
-%define commit 6be6332
+%define commit e2ef763
 
 Summary: Elements for Kurento Media Server
 Name: kms-elements
@@ -7,13 +7,13 @@ Release: 1%{?dist}
 License: Apache 2.0
 Group: Applications/Communications
 URL: https://github.com/Kurento/kms-elements
-Source0: Kurento-%{name}-%{commit}.tar.gz
+#Source0: Kurento-%{name}-%{commit}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Requires: kms-core kms-openwebrtc-gst-plugins
 BuildRequires: kms-core-devel kms-jsonrpc-devel kms-libnice-devel
 BuildRequires: kurento-module-creator
 BuildRequires: kms-gstreamer1-devel >= 1.8.1, kms-gstreamer1-plugins-base-devel
-BuildRequires: openwebrtc-gst-plugins-devel
+BuildRequires: kms-openwebrtc-gst-plugins-devel
 BuildRequires: boost >= 1.55
 BuildRequires: boost-system boost-filesystem boost-program-options boost-test boost-thread boost-log boost-regex
 BuildRequires: libsigc++20-devel
@@ -40,7 +40,11 @@ Requires: pkgconfig
 The kms-elements project contains elements needed for the Kurento Media Server
 
 %prep
-%setup -q -n Kurento-%{name}-%{commit}
+%setup -c -n %{name}-%{version}-%{commit} -T -D
+if [ ! -d .git ]; then
+    git clone https://github.com/Kurento/%{name}.git .
+    git checkout %{commit}
+fi
 
 
 %build
