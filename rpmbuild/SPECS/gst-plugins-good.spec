@@ -7,7 +7,7 @@
 
 Name: 		%{gstreamer}-plugins-good
 Version: 	1.8.1
-Release: 	1
+Release: 	1%{?dist}
 Summary: 	GStreamer plug-ins with good code and licensing
 
 Group: 		Applications/Multimedia

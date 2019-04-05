@@ -7,7 +7,7 @@
 
 Name: 		%{gstreamer}-libav
 Version: 	1.8.1
-Release:	1
+Release:	1%{?dist}
 Summary: 	GStreamer Streaming-media framework plug-in using libav (FFmpeg).
 Group: 		Libraries/Multimedia
 License: 	LGPL

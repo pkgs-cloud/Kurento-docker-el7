@@ -39,7 +39,7 @@ developing applications that use %{name}.
 #%patch1 -p1 -b .srtp_aes_encrypt
 #%patch2 -p1 -b .sha1-name-fix
 #%patch3 -p1 -b .mips-name-fix
-%setup -c -n %{name}-%{version} -T -D
+%setup -c -n %{name}-%{version}-%{commit} -T -D
 if [ ! -d .git ]; then
     git clone https://github.com/Kurento/libsrtp.git .
     git checkout %{commit}

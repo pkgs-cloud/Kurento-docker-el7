@@ -29,7 +29,7 @@ support for multihoming that runs on top of IP or UDP, and supports
 both v4 and v6 versions
 
 %prep
-%setup -c -n %{name} -T -D
+%setup -c -n %{name}-%{version}-%{commit} -T -D
 if [ ! -d .git ]; then
     git clone https://github.com/Kurento/usrsctp.git .
     git checkout %{commit}

@@ -7,7 +7,7 @@
 
 Name: 		%{gstreamer}-plugins-ugly
 Version: 	1.8.1
-Release: 	1
+Release: 	1%{?dist}
 Summary: 	GStreamer streaming media framework "ugly" plug-ins
 
 Group: 		Applications/Multimedia
