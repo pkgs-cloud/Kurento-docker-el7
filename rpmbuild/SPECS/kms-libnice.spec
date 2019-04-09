@@ -1,8 +1,10 @@
-%define         commit aa63a59
+%define         commit e10f3a6
+
+%global		_prefix /opt/kms
 
 Name:           kms-libnice
 Version:        0.1.15
-Release:        1%{?dist}
+Release:        3%{?dist}
 Summary:        Kurento GLib ICE implementation
 
 Group:          System Environment/Libraries
@@ -48,22 +50,34 @@ if [ ! -d .git ]; then
     git checkout %{commit}
 fi
 
+for p in $(cat debian/patches/series); do
+    if ! patch -R -p1 -s -f --dry-run <debian/patches/$p; then
+	patch -p1 <debian/patches/$p
+    fi
+done
+
 %check
 #make check
 
 
 %build
-./autogen.sh --disable-static --with-crypto-library=openssl --with-gstreamer
-%configure --disable-static --with-crypto-library=openssl --with-gstreamer
+./autogen.sh --disable-static --with-gstreamer-1.5 --prefix=%{_prefix}
+#configure --disable-static --with-crypto-library=openssl --with-gstreamer-1.5
+%configure --disable-static --with-gstreamer-1.5
 #sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 #sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+
+export XDG_DATA_DIRS=%{_datadir}
+export LD_RUN_PATH=%{_libdir}
+export LD_LIBRARY_PATH=%{_libdir}
+
 make %{?_smp_mflags}
 
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
-mv $RPM_BUILD_ROOT/usr/lib64/gstreamer-1.0 $RPM_BUILD_ROOT/usr/lib64/gstreamer-1.5
+#mv $RPM_BUILD_ROOT/usr/lib64/gstreamer-1.0 $RPM_BUILD_ROOT/usr/lib64/gstreamer-1.5
 
 
 %post -p /sbin/ldconfig

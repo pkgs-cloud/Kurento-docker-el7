@@ -1,8 +1,9 @@
-%define commit 2e8601a
+%define commit dcd7f64
+%define kms_libdir /opt/kms/lib64
 
 Summary: Core library of Kurento Media Server
 Name: kms-core
-Version: 6.9.1
+Version: 6.10.0
 Release: 1%{?dist}
 License: GPLv2+
 Group: Applications/Communications
@@ -14,8 +15,8 @@ BuildRequires: kms-jsonrpc-devel kms-jsoncpp-devel kms-cmake-utils kurento-modul
 BuildRequires: kms-gstreamer1-devel >= 1.8.1, kms-gstreamer1-plugins-base-devel
 BuildRequires: kms-openwebrtc-gst-plugins-devel
 BuildRequires: kms-cmake-utils
-BuildRequires: boost >= 1.55
-BuildRequires: boost-system boost-filesystem boost-program-options boost-test boost-thread boost-log boost-regex
+BuildRequires: kms-boost
+BuildRequires: kms-boost-system kms-boost-filesystem kms-boost-program-options kms-boost-test kms-boost-thread kms-boost-log kms-boost-regex
 BuildRequires: libsigc++20-devel
 BuildRequires: glibmm24-devel
 BuildRequires: libuuid-devel >= 2.23
@@ -41,19 +42,36 @@ if [ ! -d .git ]; then
 fi
 
 %build
+export PKG_CONFIG_PATH=%{kms_libdir}/pkgconfig
+export LD_RUN_PATH=%{kms_libdir}
+export LD_LIBRARY_PATH=%{kms_libdir}
+export LIBRARY_PATH=%{kms_libdir}
+export CPATH=/opt/kms/include
+
 mkdir -p build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DCMAKE_BUILD_TYPE=Release ..
+cmake -DBOOST_ROOT:PATHNAME=/opt/kms \
+    -DBoost_NO_BOOST_CMAKE=TRUE \
+    -DCMAKE_INSTALL_PREFIX:PATH=/usr \
+    -DCMAKE_BUILD_TYPE=Release ..
 
 make %{?_smp_mflags}
 
 
 %install
+export PKG_CONFIG_PATH={kms_libdir}/pkgconfig
+export LD_RUN_PATH=%{kms_libdir}
+export LD_LIBRARY_PATH=%{kms_libdir}
+export LIBRARY_PATH=%{kms_libdir}
+
 rm -rf %{buildroot}
 cd build
 make install DESTDIR=%{buildroot}
 mv %{buildroot}/usr/etc %{buildroot}
 mv %{buildroot}%{_datadir}/cmake-* %{buildroot}%{_datadir}/cmake
+
+mkdir -p %{buildroot}%{kms_libdir}
+mv %{buildroot}%{_libdir}/gstreamer-* %{buildroot}%{kms_libdir}
 
 %clean
 rm -rf %{buildroot}
@@ -68,7 +86,7 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 %{_sysconfdir}/kurento/modules/kurento
 %{_libdir}/*.so.*
-%{_libdir}/gstreamer-*/*.so
+%{kms_libdir}/gstreamer-*/*.so
 %{_libdir}/kurento/modules/*.so
 
 %{_datadir}/kurento/modules/*

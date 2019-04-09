@@ -1,6 +1,8 @@
 %global shortname srtp
 %define commit cf41cce
 
+%global _prefix /opt/kms
+
 Name:		kms-libsrtp
 Version:	1.5.2
 Release:	1%{?dist}
@@ -16,7 +18,7 @@ URL:		https://github.com/Kurento/libsrtp
 #Patch1:		libsrtp-srtp_aes_encrypt.patch
 #Patch2:		libsrtp-sha1-name-fix.patch
 #Patch3:		libsrtp-fix-name-collision-on-MIPS.patch
-Provides: libsrtp
+Provides: kms-libsrtp
 
 %description
 This package provides an implementation of the Secure Real-time
@@ -28,7 +30,7 @@ Summary:	Development files for %{name}
 Group:		Development/Libraries
 Requires:	%{name}%{?_isa} = %{version}-%{release}
 Requires:	pkgconfig
-Provides:	libsrtp-devel
+Provides:	kms-libsrtp-devel
 
 %description devel
 The %{name}-devel package contains libraries and header files for

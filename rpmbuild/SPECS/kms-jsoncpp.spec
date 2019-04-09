@@ -1,5 +1,7 @@
 %define commit 15940be
 
+%global _prefix /opt/kms
+
 Summary: Kurento JSON library
 Name: kms-jsoncpp
 Version: 1.6.3
@@ -39,7 +41,7 @@ fi
 %build
 mkdir -p build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DBUILD_SHARED_LIBS=ON -DBUILD_STATIC_LIBS=ON -DLIB_SUFFIX=64 -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" ..
+cmake -DCMAKE_INSTALL_PREFIX:PATH=%{_prefix} -DBUILD_SHARED_LIBS=ON -DBUILD_STATIC_LIBS=ON -DLIB_SUFFIX=64 -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" ..
 make %{?_smp_mflags}
 
 

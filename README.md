@@ -1,5 +1,9 @@
 ### Building Kurento on CentOS 7
 
+**Kurento 6.10.0**
+
+Kurento depends on several custom libraries and tools such as Boost 1.55 and a customized version of Gstreamer. To avoid possible conflicts with system libraries and tools, some Kurento dependencies are built and installed under `/opt/kms` folder.
+
 1. Install Docker on your system. And clone repository.
 
 2. Build docker image (based on CentOS 7.6 image) and run container

@@ -1,8 +1,8 @@
-%define		commit b5cbdf8
+%define commit 4078f77
 
 Summary: Kurento cmake utilities
 Name: kms-cmake-utils
-Version: 6.9.1
+Version: 6.10.0
 Release: 1%{?dist}
 License: GPLv2+
 Group: Development/Libraries

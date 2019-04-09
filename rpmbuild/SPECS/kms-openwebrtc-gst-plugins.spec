@@ -1,5 +1,7 @@
 %define		commit 6a0d22d
 
+%global		_prefix /opt/kms
+
 Name:           kms-openwebrtc-gst-plugins
 Version:        0.10.0
 Release:        1%{?dist}
@@ -52,17 +54,34 @@ fi
 
 
 %build
-./autogen.sh
+export XDG_DATA_DIRS=%{_datadir}
+export LD_RUN_PATH=%{_libdir}
+export LD_LIBRARY_PATH=%{_libdir}
+export CPATH=%{_includedir}
+export CPPFLAGS=-I%{_includedir}
+export LDFLAGS=-L%{_libdir}
+
+./autogen.sh --prefix=%{_prefix}
+
 %configure --disable-static
 #./configure --build=x86_64-redhat-linux-gnu --host=x86_64-redhat-linux-gnu --program-prefix= --disable-dependency-tracking --prefix=/usr \
 #    --exec-prefix=/usr --bindir=/usr/bin --sbindir=/usr/sbin --sysconfdir=/etc --datadir=/usr/share --includedir=/usr/include --libdir=/usr/lib64 \
 #    --libexecdir=/usr/libexec --localstatedir=/var --sharedstatedir=/var/lib --mandir=/usr/share/man --infodir=/usr/share/info
+
+
 
 #make %{?_smp_mflags}
 make all
 
 
 %install
+export XDG_DATA_DIRS=%{_datadir}
+export LD_RUN_PATH=%{_libdir}
+export LD_LIBRARY_PATH=%{_libdir}
+export CPATH=%{_includedir}
+export CPPFLAGS=-I%{_includedir}
+export LDFLAGS=-L%{_libdir}
+
 rm -rf %{buildroot}
 make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'

@@ -1,5 +1,7 @@
 %define		commit fd1d0e6
 
+%global _prefix /opt/kms
+
 Summary: Kurento SCTP user-land implementation
 Name: kms-usrsctp
 Version: 0.9.2

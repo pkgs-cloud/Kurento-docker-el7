@@ -1,8 +1,9 @@
-%define commit 8e48ee4
+%define commit 0951b47
+%define kms_libdir /opt/kms/lib64
 
 Summary: Kurento JsonRPC protocol implementation
 Name: kms-jsonrpc
-Version: 6.9.1
+Version: 6.10.0
 Release: 1%{?dist}
 License: GPLv2+
 Group: Applications/Communications
@@ -12,8 +13,8 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Requires: kms-jsoncpp
 BuildRequires: kms-cmake-utils
 BuildRequires: kms-jsoncpp-devel
-BuildRequires: boost >= 1.55
-BuildRequires: boost-test
+BuildRequires: kms-boost
+BuildRequires: kms-boost-test
 
 %description
 Kurento JsonRPC protocol implementation
@@ -35,13 +36,28 @@ if [ ! -d .git ]; then
 fi
 
 %build
+export PKG_CONFIG_PATH=%{kms_libdir}/pkgconfig
+export LD_RUN_PATH=%{kms_libdir}
+export LD_LIBRARY_PATH=%{kms_libdir}
+export LIBRARY_PATH=%{kms_libdir}
+
 mkdir -p build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" ..
+cmake -DBoost_NO_SYSTEM_PATHS=TRUE \
+    -DBOOST_ROOT:PATHNAME=/opt/kms \
+    -DBoost_NO_BOOST_CMAKE=TRUE \
+    -DCMAKE_INSTALL_PREFIX:PATH=/usr \
+    -DBUILD_SHARED_LIBS=ON \
+    -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" ..
 make %{?_smp_mflags}
 
 
 %install
+export PKG_CONFIG_PATH=%{kms_libdir}/pkgconfig
+export LD_RUN_PATH=%{kms_libdir}
+export LD_LIBRARY_PATH=%{kms_libdir}
+export LIBRARY_PATH=%{kms_libdir}
+
 rm -rf %{buildroot}
 cd build
 make install DESTDIR=%{buildroot}

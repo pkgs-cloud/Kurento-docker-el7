@@ -1,8 +1,9 @@
-%define commit be01bd1
+%define commit 76ed4ef
+%define kms_libdir /opt/kms/lib64
 
 Summary: Filter elements for Kurento Media Server
 Name: kms-filters
-Version: 6.9.1
+Version: 6.10.0
 Release: 1%{?dist}
 License: Apache 2.0
 Group: Applications/Communications
@@ -34,17 +35,33 @@ if [ ! -d .git ]; then
 fi
 
 %build
+export PKG_CONFIG_PATH=%{kms_libdir}/pkgconfig
+export LD_RUN_PATH=%{kms_libdir}
+export LD_LIBRARY_PATH=%{kms_libdir}
+export LIBRARY_PATH=%{kms_libdir}
+
 mkdir -p build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DCMAKE_BUILD_TYPE=Release ..
+cmake -DBOOST_ROOT:PATHNAME=/opt/kms \
+    -DBoost_NO_BOOST_CMAKE=TRUE \
+    -DCMAKE_INSTALL_PREFIX:PATH=/usr \
+    -DCMAKE_BUILD_TYPE=Release ..
 make %{?_smp_mflags}
 
 
 %install
+export PKG_CONFIG_PATH=%{kms_libdir}/pkgconfig
+export LD_RUN_PATH=%{kms_libdir}
+export LD_LIBRARY_PATH=%{kms_libdir}
+export LIBRARY_PATH=%{kms_libdir}
+
 rm -rf %{buildroot}
 cd build
 make install DESTDIR=%{buildroot}
 mv %{buildroot}%{_datadir}/cmake-* %{buildroot}%{_datadir}/cmake
+
+mkdir -p %{buildroot}%{kms_libdir}
+mv %{buildroot}%{_libdir}/gstreamer-1.5 %{buildroot}%{kms_libdir}
 
 %clean
 rm -rf %{buildroot}
@@ -58,7 +75,7 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 %{_libdir}/*.so.*
-%{_libdir}/gstreamer-*/*.so
+%{kms_libdir}/gstreamer-*/*.so
 %{_libdir}/kurento/modules/*.so
 %{_datadir}/kurento/modules/*
 
