@@ -1,0 +1,15 @@
+Description: Replace deprecated FFmpeg API
+Author: Andreas Cadhalpun <Andreas.Cadhalpun@googlemail.com>
+Last-Update: <2015-11-02>
+
+--- libde265-1.0.2.orig/sherlock265/VideoDecoder.cc
++++ libde265-1.0.2/sherlock265/VideoDecoder.cc
+@@ -219,7 +219,7 @@ void VideoDecoder::convert_frame_swscale
+     }
+     width = img->get_width();
+     height = img->get_height();
+-    sws = sws_getContext(width, height, PIX_FMT_YUV420P, width, height, PIX_FMT_BGRA, SWS_FAST_BILINEAR, NULL, NULL, NULL);
++    sws = sws_getContext(width, height, AV_PIX_FMT_YUV420P, width, height, AV_PIX_FMT_BGRA, SWS_FAST_BILINEAR, NULL, NULL, NULL);
+   }
+ 
+   int stride[3];

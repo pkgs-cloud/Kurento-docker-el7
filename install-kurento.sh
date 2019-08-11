@@ -4,7 +4,7 @@ set -e
 
 yum install epel-release -y
 #yum update -y
-yum install mc wget nano patch yum-utils deltarpm which aspell-en -y
+yum install mc wget nano patch git yum-utils deltarpm which -y
 
 cat <<EOF >/etc/yum.repos.d/kurento-local.repo
 [kurento-local]
