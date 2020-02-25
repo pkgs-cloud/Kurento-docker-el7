@@ -1,4 +1,4 @@
-%define commit 146d277
+%define commit 17d48dd
 
 %define majorminor   1.5
 %define gstreamer    kms-gstreamer1
@@ -11,7 +11,7 @@
 Summary: GStreamer streaming media framework "bad" plug-ins
 Name: %{gstreamer}-plugins-bad
 Version: 1.8.1
-Release: 3%{?dist}
+Release: 4%{?dist}
 # The freeze and nfs plugins are LGPLv2 (only)
 License: LGPLv2+ and LGPLv2
 Group: Applications/Multimedia

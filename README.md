@@ -1,6 +1,8 @@
 ### Building Kurento on CentOS 7
 
-**Kurento 6.11.0**
+**Kurento 6.13.0**
+
+_Since 6.13.0 we use GCC 7.3+ due to compatibility issues with older compilers shipped with CentOS 7._
 
 Kurento depends on several custom libraries and tools such as Boost 1.55 and a customized version of Gstreamer. To avoid possible conflicts with system libraries and tools, some Kurento dependencies are built and installed under `/opt/kms` folder.
 
@@ -13,15 +15,15 @@ Kurento depends on several custom libraries and tools such as Boost 1.55 and a c
 2. Build docker image (based on CentOS 7 Latest)
 
 	```
-	docker build -t rpm-build .
+	docker build -t rpm-build-kurento .
 	```
-	
+
 3. Select Kurento version
 
 	```
-	cd 6.11.0
+	cd 6.13.0
 	```
-	
+
 4. Build Kurento dependencies
 
 	```
@@ -30,11 +32,11 @@ Kurento depends on several custom libraries and tools such as Boost 1.55 and a c
 	  -v $(pwd)/RPMS:/root/rpmbuild/RPMS \
 	  -v $(pwd)/SOURCES:/root/rpmbuild/SOURCES \
 	  -v $(pwd)/scripts:/root/scripts \
-	  --name kurento-build-deps -t rpm-build
-	  
+	  --name kurento-build-deps -t rpm-build-kurento
+
 	docker exec -it kurento-build-deps /root/scripts/build-deps.sh
 	```
-	
+
 5. Build Kurento packages
 
 	```
@@ -43,18 +45,18 @@ Kurento depends on several custom libraries and tools such as Boost 1.55 and a c
 	  -v $(pwd)/RPMS:/root/rpmbuild/RPMS \
 	  -v $(pwd)/SOURCES:/root/rpmbuild/SOURCES \
 	  -v $(pwd)/scripts:/root/scripts \
-	  --name kurento-build -t rpm-build
-	  
+	  --name kurento-build -t rpm-build-kurento
+
 	docker exec -it kurento-build /root/scripts/build.sh
 	```
-	
+
 	Each Kurento and Gstreamer packages are being built from sources pulled from respective [https://github.com/Kurento](https://github.com/Kurento) repository. It uses git commit defined in the respective RPM spec file under `SPECS`.
 	To update a package, modify a line in a spec file. For example:
-	
+
 	```
 	%define commit b33143e
 	```
-	
+
 	Also change `Version:` and/or `Release:` tags if necessary.
 
 6. Optionally, delete Docker containers after successful build
@@ -79,7 +81,7 @@ Kurento depends on several custom libraries and tools such as Boost 1.55 and a c
 	```
 	chmod +x install-kurento.sh && ./install-kurento.sh
 	```
-	
+
 ### Running Kurento on CentOS/RHEL 7
 
 * To start, stop, restart, enable, disable Kurento Media Server service

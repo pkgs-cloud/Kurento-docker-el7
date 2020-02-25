@@ -1,9 +1,9 @@
-%define commit 003ed85
+%define commit 8b0a030
 
 Summary: Kurento Module Creator
 Name: kurento-module-creator
-Version: 6.11.0
-Release: 1%{?dist}
+Version: 6.13.0
+Release: 0%{?dist}
 License: Apache 2.0
 Group: Development/Tools
 URL: https://github.com/Kurento/kurento-module-creator

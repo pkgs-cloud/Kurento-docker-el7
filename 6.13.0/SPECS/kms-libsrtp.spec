@@ -1,11 +1,11 @@
 %global shortname srtp
-%define commit 7e44cf1
+%define commit 577e0a5
 
 %global _prefix /opt/kms
 
 Name:		kms-libsrtp
-Version:	1.5.2.1
-Release:	1%{?dist}
+Version:	1.6.0
+Release:	0%{?dist}
 Summary:	An implementation of the Secure Real-time Transport Protocol (SRTP)
 Group:		System Environment/Libraries
 License:	BSD

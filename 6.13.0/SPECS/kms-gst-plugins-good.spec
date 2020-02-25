@@ -1,4 +1,4 @@
-%define commit 51456b9
+%define commit be46c7b
 
 %define majorminor  1.5
 %define gstreamer   kms-gstreamer1
@@ -9,7 +9,7 @@
 
 Name: 		%{gstreamer}-plugins-good
 Version: 	1.8.1
-Release: 	2%{?dist}
+Release: 	3%{?dist}
 Summary: 	GStreamer plug-ins with good code and licensing
 
 Group: 		Applications/Multimedia

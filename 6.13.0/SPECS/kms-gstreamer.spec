@@ -1,4 +1,4 @@
-%define commit 0592915
+%define commit 84c84bf
 
 %define		gstreamer	kms-gstreamer1
 %define		majorminor	1.5
@@ -9,7 +9,7 @@
 
 Name: 		%{gstreamer}
 Version: 	1.8.1
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 Summary: 	GStreamer streaming media framework runtime
 
 Group: 		Applications/Multimedia

@@ -1,4 +1,4 @@
-%define commit 330b773
+%define commit 7fb3243
 
 %define majorminor  1.5
 %define gstreamer   kms-gstreamer1
@@ -9,7 +9,7 @@
 
 Name: 		%{gstreamer}-plugins-base
 Version: 	1.8.1
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 Summary: 	GStreamer streaming media framework plug-ins
 
 Group: 		Applications/Multimedia

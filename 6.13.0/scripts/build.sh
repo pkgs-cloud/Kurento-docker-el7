@@ -2,6 +2,18 @@
 
 set -e
 
+yumi centos-release-scl
+yumi devtoolset-7-gcc*
+#scl enable devtoolset-7 bash
+
+for filepath in `find /opt/rh/devtoolset-7/root/usr/bin/ -executable -type f`; do
+  file=`basename $filepath`
+  if [ -f /usr/bin/$file ] && [ ! -f /usr/bin/$file.orig ]; then
+    mv /usr/bin/$file /usr/bin/$file.orig
+    ln -s $filepath /usr/bin/$file
+  fi
+done
+
 chown -R root:root /root/rpmbuild
 
 cat >/etc/yum.repos.d/kurento.repo <<EOF
@@ -24,26 +36,26 @@ yumi ../RPMS/x86_64/kms-jsoncpp-1.6.3-1.el7.x86_64.rpm ../RPMS/x86_64/kms-jsoncp
 
 yumbd kms-libsrtp.spec
 rpmbb kms-libsrtp.spec
-yumi ../RPMS/x86_64/kms-libsrtp-1.5.2.1-1.el7.x86_64.rpm ../RPMS/x86_64/kms-libsrtp-devel-1.5.2.1-1.el7.x86_64.rpm
+yumi ../RPMS/x86_64/kms-libsrtp-1.6.0-0.el7.x86_64.rpm ../RPMS/x86_64/kms-libsrtp-devel-1.6.0-0.el7.x86_64.rpm
 
 rpmbb kms-usrsctp.spec
 yumi ../RPMS/x86_64/kms-usrsctp-0.9.2-1.el7.x86_64.rpm ../RPMS/x86_64/kms-usrsctp-devel-0.9.2-1.el7.x86_64.rpm
 
 yumbd kms-gstreamer.spec
 rpmbb kms-gstreamer.spec
-yumi ../RPMS/x86_64/kms-gstreamer1-1.8.1-1.el7.x86_64.rpm ../RPMS/x86_64/kms-gstreamer1-devel-1.8.1-1.el7.x86_64.rpm
+yumi ../RPMS/x86_64/kms-gstreamer1-1.8.1-2.el7.x86_64.rpm ../RPMS/x86_64/kms-gstreamer1-devel-1.8.1-2.el7.x86_64.rpm
 
 yumbd kms-gst-plugins-base.spec
 rpmbb kms-gst-plugins-base.spec
-yumi ../RPMS/x86_64/kms-gstreamer1-plugins-base-1.8.1-1.el7.x86_64.rpm ../RPMS/x86_64/kms-gstreamer1-plugins-base-devel-1.8.1-1.el7.x86_64.rpm
+yumi ../RPMS/x86_64/kms-gstreamer1-plugins-base-1.8.1-2.el7.x86_64.rpm ../RPMS/x86_64/kms-gstreamer1-plugins-base-devel-1.8.1-2.el7.x86_64.rpm
 
 yumbd kms-gst-plugins-bad.spec
 rpmbb kms-gst-plugins-bad.spec
-yumi ../RPMS/x86_64/kms-gstreamer1-plugins-bad-1.8.1-3.el7.x86_64.rpm ../RPMS/x86_64/kms-gstreamer1-plugins-bad-devel-1.8.1-3.el7.x86_64.rpm
+yumi ../RPMS/x86_64/kms-gstreamer1-plugins-bad-1.8.1-4.el7.x86_64.rpm ../RPMS/x86_64/kms-gstreamer1-plugins-bad-devel-1.8.1-4.el7.x86_64.rpm
 
 yumbd kms-gst-plugins-good.spec
 rpmbb kms-gst-plugins-good.spec
-yumi ../RPMS/x86_64/kms-gstreamer1-plugins-good-1.8.1-2.el7.x86_64.rpm
+yumi ../RPMS/x86_64/kms-gstreamer1-plugins-good-1.8.1-3.el7.x86_64.rpm
 
 yumbd kms-gst-plugins-ugly.spec
 rpmbb kms-gst-plugins-ugly.spec
@@ -62,30 +74,30 @@ yumi ../RPMS/x86_64/kms-libnice-0.1.15-3.el7.x86_64.rpm ../RPMS/x86_64/kms-libni
 
 yumbd kurento-module-creator.spec
 rpmbb kurento-module-creator.spec
-yumi ../RPMS/x86_64/kurento-module-creator-6.11.0-1.el7.x86_64.rpm
+yumi ../RPMS/x86_64/kurento-module-creator-6.13.0-0.el7.x86_64.rpm
 
 rpmbb kms-cmake-utils.spec
-yumi ../RPMS/x86_64/kms-cmake-utils-6.11.0-1.el7.x86_64.rpm
+yumi ../RPMS/x86_64/kms-cmake-utils-6.13.0-0.el7.x86_64.rpm
 
 rpmbb kms-jsonrpc.spec
-yumi ../RPMS/x86_64/kms-jsonrpc-6.11.0-1.el7.x86_64.rpm ../RPMS/x86_64/kms-jsonrpc-devel-6.11.0-1.el7.x86_64.rpm
+yumi ../RPMS/x86_64/kms-jsonrpc-6.13.0-0.el7.x86_64.rpm ../RPMS/x86_64/kms-jsonrpc-devel-6.13.0-0.el7.x86_64.rpm
 
 yumbd kms-core.spec
 rpmbb kms-core.spec
-yumi ../RPMS/x86_64/kms-core-6.11.0-1.el7.x86_64.rpm ../RPMS/x86_64/kms-core-devel-6.11.0-1.el7.x86_64.rpm
+yumi ../RPMS/x86_64/kms-core-6.13.0-0.el7.x86_64.rpm ../RPMS/x86_64/kms-core-devel-6.13.0-0.el7.x86_64.rpm
 
 yumbd kms-elements.spec
 rpmbb kms-elements.spec
-yumi ../RPMS/x86_64/kms-elements-6.11.0-1.el7.x86_64.rpm ../RPMS/x86_64/kms-elements-devel-6.11.0-1.el7.x86_64.rpm
+yumi ../RPMS/x86_64/kms-elements-6.13.0-0.el7.x86_64.rpm ../RPMS/x86_64/kms-elements-devel-6.13.0-0.el7.x86_64.rpm
 
 rpmbb kms-filters.spec
-yumi ../RPMS/x86_64/kms-filters-6.11.0-1.el7.x86_64.rpm ../RPMS/x86_64/kms-filters-devel-6.11.0-1.el7.x86_64.rpm
+yumi ../RPMS/x86_64/kms-filters-6.13.0-0.el7.x86_64.rpm ../RPMS/x86_64/kms-filters-devel-6.13.0-0.el7.x86_64.rpm
 
 rpmbb kurento-media-server.spec
-yumi ../RPMS/x86_64/kurento-media-server-6.11.0-1.el7.x86_64.rpm
+yumi ../RPMS/x86_64/kurento-media-server-6.13.0-0.el7.x86_64.rpm
 
 rpmbb kms.spec
-yumi ../RPMS/x86_64/kms-6.11.0-1.el7.x86_64.rpm
+yumi ../RPMS/x86_64/kms-6.13.0-0.el7.x86_64.rpm
 
 # yumbd createrepo_c.spec
 # rpmbb createrepo_c.spec

@@ -1,31 +1,44 @@
-%define commit c19d7bf
+%define commit 7ed1729
 %define kms_libdir /opt/kms/lib64
 
-Summary: Filter elements for Kurento Media Server
-Name: kms-filters
-Version: 6.11.0
-Release: 1%{?dist}
+Summary: Elements for Kurento Media Server
+Name: kms-elements
+Version: 6.13.0
+Release: 0%{?dist}
 License: Apache 2.0
 Group: Applications/Communications
-URL: https://github.com/Kurento/kms-filters
+URL: https://github.com/Kurento/kms-elements
 #Source0: Kurento-%{name}-%{commit}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-Requires: kms-core kms-elements
-BuildRequires: kms-core-devel kms-elements-devel
-BuildRequires: opencv-devel
+Requires: kms-core kms-openwebrtc-gst-plugins
+BuildRequires: kms-core-devel kms-jsonrpc-devel kms-libnice-devel
+BuildRequires: kurento-module-creator
+BuildRequires: kms-gstreamer1-devel >= 1.8.1, kms-gstreamer1-plugins-base-devel
+BuildRequires: kms-openwebrtc-gst-plugins-devel
+BuildRequires: kms-boost
+BuildRequires: kms-boost-system kms-boost-filesystem kms-boost-program-options kms-boost-test kms-boost-thread kms-boost-log kms-boost-regex
+BuildRequires: libsigc++20-devel
+BuildRequires: glibmm24-devel
+BuildRequires: libevent-devel >= 2.0
+BuildRequires: kms-libsrtp-devel >= 1.5.4
+BuildRequires: opus-devel >= 1.1.0
+BuildRequires: libuuid-devel >= 2.23
 BuildRequires: libsoup-devel >= 2.40
+BuildRequires: openssl-devel >= 1.0.2h
+BuildRequires: gobject-introspection-devel
+#BuildRequires: valgrind
 
 %description
-The kms-filters project contains filter elements for the Kurento Media Server
+The kms-elements project contains elements needed for the Kurento Media Server
 
 %package devel
-Summary: Filter elements for Kurento Media Server
+Summary: Elements for Kurento Media Server
 Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
 Requires: pkgconfig
 
 %description devel
-The kms-filters project contains filter elements for the Kurento Media Server
+The kms-elements project contains elements needed for the Kurento Media Server
 
 %prep
 %setup -c -n %{name}-%{version}-%{commit} -T -D
@@ -34,11 +47,13 @@ if [ ! -d .git ]; then
     git checkout %{commit}
 fi
 
+
 %build
 export PKG_CONFIG_PATH=%{kms_libdir}/pkgconfig
 export LD_RUN_PATH=%{kms_libdir}
 export LD_LIBRARY_PATH=%{kms_libdir}
 export LIBRARY_PATH=%{kms_libdir}
+export CPATH=/opt/kms/include
 
 mkdir -p build
 cd build
@@ -58,10 +73,11 @@ export LIBRARY_PATH=%{kms_libdir}
 rm -rf %{buildroot}
 cd build
 make install DESTDIR=%{buildroot}
-mv %{buildroot}%{_datadir}/cmake-* %{buildroot}%{_datadir}/cmake
+mv %{buildroot}/usr/etc %{buildroot}
+mv %{buildroot}/usr/share/cmake-* %{buildroot}/usr/share/cmake
 
 mkdir -p %{buildroot}%{kms_libdir}
-mv %{buildroot}%{_libdir}/gstreamer-1.5 %{buildroot}%{kms_libdir}
+mv %{buildroot}%{_libdir}/gstreamer-* %{buildroot}%{kms_libdir}
 
 %clean
 rm -rf %{buildroot}
@@ -74,6 +90,8 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
+#%doc AUTHORS COPYING ChangeLog NEWS README TODO
+%config(noreplace) %{_sysconfdir}/kurento/modules/kurento
 %{_libdir}/*.so.*
 %{kms_libdir}/gstreamer-*/*.so
 %{_libdir}/kurento/modules/*.so
@@ -82,11 +100,11 @@ rm -rf %{buildroot}
 %files devel
 %defattr(-,root,root,-)
 %{_libdir}/pkgconfig/*
-%{_libdir}/*.so
 %{_includedir}/*
 %{_datadir}/cmake/*
 %exclude %{_libdir}/*.la
 %exclude %{_libdir}/*.a
+%{_libdir}/*.so
 
 
 %changelog

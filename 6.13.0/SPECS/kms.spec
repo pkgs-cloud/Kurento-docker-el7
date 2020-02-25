@@ -2,8 +2,8 @@
 
 Summary: Meta-package to pull in all Kurento Media Server dependencies
 Name: kms
-Version: 6.11.0
-Release: 1%{?dist}
+Version: 6.13.0
+Release: 0%{?dist}
 License: GPLv2+
 Group: Applications/Communications
 URL: https://github.com/Kurento

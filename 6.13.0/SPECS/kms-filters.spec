@@ -1,32 +1,31 @@
-%define commit eae5b9c
+%define commit 236f029
 %define kms_libdir /opt/kms/lib64
 
-Summary: Kurento JsonRPC protocol implementation
-Name: kms-jsonrpc
-Version: 6.11.0
-Release: 1%{?dist}
-License: GPLv2+
+Summary: Filter elements for Kurento Media Server
+Name: kms-filters
+Version: 6.13.0
+Release: 0%{?dist}
+License: Apache 2.0
 Group: Applications/Communications
-URL: https://github.com/Kurento/kms-jsonrpc
-#Source0: Kurento-kms-jsonrpc-%{commit}.tar.gz
+URL: https://github.com/Kurento/kms-filters
+#Source0: Kurento-%{name}-%{commit}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-Requires: kms-jsoncpp
-BuildRequires: kms-cmake-utils
-BuildRequires: kms-jsoncpp-devel
-BuildRequires: kms-boost
-BuildRequires: kms-boost-test
+Requires: kms-core kms-elements
+BuildRequires: kms-core-devel kms-elements-devel
+BuildRequires: opencv-devel
+BuildRequires: libsoup-devel >= 2.40
 
 %description
-Kurento JsonRPC protocol implementation
+The kms-filters project contains filter elements for the Kurento Media Server
 
 %package devel
-Summary: Kurento JsonRPC protocol implementation
+Summary: Filter elements for Kurento Media Server
 Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
 Requires: pkgconfig
 
 %description devel
-Kurento JsonRPC protocol implementation
+The kms-filters project contains filter elements for the Kurento Media Server
 
 %prep
 %setup -c -n %{name}-%{version}-%{commit} -T -D
@@ -43,12 +42,10 @@ export LIBRARY_PATH=%{kms_libdir}
 
 mkdir -p build
 cd build
-cmake -DBoost_NO_SYSTEM_PATHS=TRUE \
-    -DBOOST_ROOT:PATHNAME=/opt/kms \
+cmake -DBOOST_ROOT:PATHNAME=/opt/kms \
     -DBoost_NO_BOOST_CMAKE=TRUE \
     -DCMAKE_INSTALL_PREFIX:PATH=/usr \
-    -DBUILD_SHARED_LIBS=ON \
-    -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" ..
+    -DCMAKE_BUILD_TYPE=Release ..
 make %{?_smp_mflags}
 
 
@@ -61,7 +58,10 @@ export LIBRARY_PATH=%{kms_libdir}
 rm -rf %{buildroot}
 cd build
 make install DESTDIR=%{buildroot}
-mv %{buildroot}/usr/share/cmake-* %{buildroot}/usr/share/cmake
+mv %{buildroot}%{_datadir}/cmake-* %{buildroot}%{_datadir}/cmake
+
+mkdir -p %{buildroot}%{kms_libdir}
+mv %{buildroot}%{_libdir}/gstreamer-1.5 %{buildroot}%{kms_libdir}
 
 %clean
 rm -rf %{buildroot}
@@ -71,16 +71,20 @@ rm -rf %{buildroot}
 
 %postun -p /sbin/ldconfig
 
+
 %files
 %defattr(-,root,root,-)
 %{_libdir}/*.so.*
+%{kms_libdir}/gstreamer-*/*.so
+%{_libdir}/kurento/modules/*.so
+%{_datadir}/kurento/modules/*
 
 %files devel
 %defattr(-,root,root,-)
-%{_libdir}/*.so
 %{_libdir}/pkgconfig/*
+%{_libdir}/*.so
 %{_includedir}/*
-%{_datadir}/*
+%{_datadir}/cmake/*
 %exclude %{_libdir}/*.la
 %exclude %{_libdir}/*.a
 

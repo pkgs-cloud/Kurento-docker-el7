@@ -1,10 +1,10 @@
-%define commit 419bbcd
+%define commit edddcc9
 %define kms_libdir /opt/kms/lib64
 
 Summary: Kurento Media Server
 Name: kurento-media-server
-Version: 6.11.0
-Release: 1%{?dist}
+Version: 6.13.0
+Release: 0%{?dist}
 License: Apache 2.0
 Group: Applications/Communications
 URL: https://github.com/Kurento/kurento-media-server
