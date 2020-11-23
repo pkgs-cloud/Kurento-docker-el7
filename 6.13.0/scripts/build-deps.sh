@@ -10,12 +10,12 @@ for spec in `ls *.spec`; do
     rpmsrc $spec
 done
 
-rpmbb python-rpm-macros.spec
-yumi ../RPMS/noarch/python-rpm-macros-3-25.el7.noarch.rpm ../RPMS/noarch/python-srpm-macros-3-25.el7.noarch.rpm ../RPMS/noarch/python2-rpm-macros-3-25.el7.noarch.rpm
-
-yumbd python36.spec
-rpmbb python36.spec --without tests --without debug_build --without gdb_hooks --without valgrind
-yumi ../RPMS/x86_64/python36-3.6.8-1.el7.x86_64.rpm ../RPMS/x86_64/python36-libs-3.6.8-1.el7.x86_64.rpm
+# rpmbb python-rpm-macros.spec
+# yumi ../RPMS/noarch/python-rpm-macros-3-25.el7.noarch.rpm ../RPMS/noarch/python-srpm-macros-3-25.el7.noarch.rpm ../RPMS/noarch/python2-rpm-macros-3-25.el7.noarch.rpm
+#
+# yumbd python36.spec
+# rpmbb python36.spec --without tests --without debug_build --without gdb_hooks --without valgrind
+# yumi ../RPMS/x86_64/python36-3.6.8-1.el7.x86_64.rpm ../RPMS/x86_64/python36-libs-3.6.8-1.el7.x86_64.rpm
 
 rpmbb opencore-amr.spec
 yumi ../RPMS/x86_64/opencore-amr-0.1.3-4.el7.x86_64.rpm ../RPMS/x86_64/opencore-amr-devel-0.1.3-4.el7.x86_64.rpm
@@ -78,7 +78,7 @@ rpmbb kms-openjpeg2.spec
 yumi ../RPMS/x86_64/kms-openjpeg2-2.1.0-7.el7.x86_64.rpm ../RPMS/x86_64/kms-openjpeg2-devel-2.1.0-7.el7.x86_64.rpm
 
 yumbd kms-boost.spec
-rpmbb kms-boost.spec
+rpmbb kms-boost.spec --without python3
 
 cd /root/rpmbuild/RPMS/x86_64
 yumi kms-boost-1.55.0-12.el7.x86_64.rpm kms-boost-atomic-1.55.0-12.el7.x86_64.rpm kms-boost-context-1.55.0-12.el7.x86_64.rpm kms-boost-coroutine-1.55.0-12.el7.x86_64.rpm kms-boost-date-time-1.55.0-12.el7.x86_64.rpm kms-boost-devel-1.55.0-12.el7.x86_64.rpm kms-boost-filesystem-1.55.0-12.el7.x86_64.rpm kms-boost-math-1.55.0-12.el7.x86_64.rpm kms-boost-random-1.55.0-12.el7.x86_64.rpm kms-boost-regex-1.55.0-12.el7.x86_64.rpm kms-boost-serialization-1.55.0-12.el7.x86_64.rpm kms-boost-system-1.55.0-12.el7.x86_64.rpm kms-boost-test-1.55.0-12.el7.x86_64.rpm kms-boost-thread-1.55.0-12.el7.x86_64.rpm kms-boost-timer-1.55.0-12.el7.x86_64.rpm kms-boost-chrono-1.55.0-12.el7.x86_64.rpm kms-boost-locale-1.55.0-12.el7.x86_64.rpm kms-boost-log-1.55.0-12.el7.x86_64.rpm kms-boost-python-1.55.0-12.el7.x86_64.rpm kms-boost-graph-1.55.0-12.el7.x86_64.rpm kms-boost-signals-1.55.0-12.el7.x86_64.rpm kms-boost-iostreams-1.55.0-12.el7.x86_64.rpm kms-boost-program-options-1.55.0-12.el7.x86_64.rpm kms-boost-wave-1.55.0-12.el7.x86_64.rpm

@@ -1,0 +1,12 @@
+--- a/source/CMakeLists.txt
++++ b/source/CMakeLists.txt
+@@ -196,7 +196,7 @@
+         add_definitions(-std=gnu++98)
+     endif()
+     if(ENABLE_PIC)
+-         add_definitions(-fPIC)
++         add_definitions(-fPIC -DPIC)
+     endif(ENABLE_PIC)
+     if(NATIVE_BUILD)
+         if(INTEL_CXX)
+

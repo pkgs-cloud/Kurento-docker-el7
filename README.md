@@ -1,8 +1,6 @@
 ### Building Kurento on CentOS 7
 
-**Kurento 6.13.0**
-
-_Since 6.13.0 we use GCC 7.3+ due to compatibility issues with older compilers shipped with CentOS 7._
+**Kurento 6.15.0**
 
 Kurento depends on several custom libraries and tools such as Boost 1.55 and a customized version of Gstreamer. To avoid possible conflicts with system libraries and tools, some Kurento dependencies are built and installed under `/opt/kms` folder.
 
@@ -12,67 +10,20 @@ Kurento depends on several custom libraries and tools such as Boost 1.55 and a c
 
 1. Install Docker on your system. And clone repository.
 
-2. Build docker image (based on CentOS 7 Latest)
+2. Change current directory to the cloned repository and build Kurento with dependencies.
 
 	```
-	docker build -t rpm-build-kurento .
+	cd Kurento-docker-el7
+	./build-kurento.sh 6.15.0
 	```
 
-3. Select Kurento version
-
-	```
-	cd 6.13.0
-	```
-
-4. Build Kurento dependencies
-
-	```
-	docker run -d \
-	  -v $(pwd)/SPECS:/root/rpmbuild/SPECS \
-	  -v $(pwd)/RPMS:/root/rpmbuild/RPMS \
-	  -v $(pwd)/SOURCES:/root/rpmbuild/SOURCES \
-	  -v $(pwd)/scripts:/root/scripts \
-	  --name kurento-build-deps -t rpm-build-kurento
-
-	docker exec -it kurento-build-deps /root/scripts/build-deps.sh
-	```
-
-5. Build Kurento packages
-
-	```
-	docker run -d \
-	  -v $(pwd)/SPECS:/root/rpmbuild/SPECS \
-	  -v $(pwd)/RPMS:/root/rpmbuild/RPMS \
-	  -v $(pwd)/SOURCES:/root/rpmbuild/SOURCES \
-	  -v $(pwd)/scripts:/root/scripts \
-	  --name kurento-build -t rpm-build-kurento
-
-	docker exec -it kurento-build /root/scripts/build.sh
-	```
-
-	Each Kurento and Gstreamer packages are being built from sources pulled from respective [https://github.com/Kurento](https://github.com/Kurento) repository. It uses git commit defined in the respective RPM spec file under `SPECS`.
-	To update a package, modify a line in a spec file. For example:
-
-	```
-	%define commit b33143e
-	```
-
-	Also change `Version:` and/or `Release:` tags if necessary.
-
-6. Optionally, delete Docker containers after successful build
-
-	```
-	docker stop kurento-build-deps kurento-build
-	docker rm kurento-build-deps kurento-build
-	```
-
-5. All RPM packages are located in `RPMS` folder.
+3. All RPM packages are saved to `6.15.0/RPMS` folder.
 
 ### Installing Kurento on CentOS/RHEL 7
 
 1. Use **minimal** system installation
 
-2. Copy `RPMS` folder onto your target system under `/root/RPMS`
+2. Copy `6.15.0/RPMS` folder onto your target system under `/root/RPMS`
 
 3. Copy `install-kurento.sh` from this repository into `/root`
 

@@ -1,0 +1,23 @@
+From 669258a21dcc9827e1496c460af0bff83aa5d654 Mon Sep 17 00:00:00 2001
+From: Romain Bouqueau <romain.bouqueau.pro@gmail.com>
+Date: Thu, 27 Apr 2017 13:32:14 +0200
+Subject: [PATCH] fix typo
+
+fix #815
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 9849173..1ac8eaf 100644
+--- a/Makefile
++++ b/Makefile
+@@ -112,7 +112,7 @@ ifneq ($(CONFIG_WIN32), yes)
+ ifneq ($(CONFIG_FFMPEG), no)
+ ifneq ($(DISABLE_CORE_TOOLS), yes)
+ ifneq ($(DISABLE_AV_PARSERS), yes)
+-	if [ -f bin/gcc/DashCast$(EXE_SUFFIX)g ] ; then \
++	if [ -f bin/gcc/DashCast$(EXE_SUFFIX) ] ; then \
+ 	$(INSTALL) $(INSTFLAGS) -m 755 bin/gcc/DashCast$(EXE_SUFFIX) "$(DESTDIR)$(prefix)/bin" ; \
+ 	fi
+ endif

@@ -1,0 +1,32 @@
+diff -Naur x265_2.2.old/source/CMakeLists.txt x265_2.2/source/CMakeLists.txt
+--- x265_2.2.old/source/CMakeLists.txt	2017-04-11 12:14:19.717605457 +0200
++++ x265_2.2/source/CMakeLists.txt	2017-04-11 12:14:27.499743262 +0200
+@@ -548,7 +548,15 @@
+     if(MSVC)
+         set_target_properties(x265-shared PROPERTIES OUTPUT_NAME libx265)
+     else()
+-        set_target_properties(x265-shared PROPERTIES OUTPUT_NAME x265)
++        if(HIGH_BIT_DEPTH)
++            if(MAIN12)
++                set_target_properties(x265-shared PROPERTIES OUTPUT_NAME x265_main12)
++            else()
++                set_target_properties(x265-shared PROPERTIES OUTPUT_NAME x265_main10)
++            endif()
++        else()
++            set_target_properties(x265-shared PROPERTIES OUTPUT_NAME x265)
++        endif(HIGH_BIT_DEPTH)
+     endif()
+     if(UNIX)
+         set_target_properties(x265-shared PROPERTIES VERSION ${X265_BUILD})
+diff -Naur x265_2.2.old/source/encoder/api.cpp x265_2.2/source/encoder/api.cpp
+--- x265_2.2.old/source/encoder/api.cpp	2017-04-11 12:14:19.727605634 +0200
++++ x265_2.2/source/encoder/api.cpp	2017-04-11 12:21:58.928758432 +0200
+@@ -356,7 +356,7 @@
+ #define ext ".dylib"
+ #else
+ #include <dlfcn.h>
+-#define ext ".so"
++#define ext ".so." xstr(X265_BUILD)
+ #endif
+ 
+ static int g_recursion /* = 0 */;
