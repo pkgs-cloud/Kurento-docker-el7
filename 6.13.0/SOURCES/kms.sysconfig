@@ -1,5 +1,0 @@
-# Kurento Environment variables file
-# See https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gstreamer/html/gst-running.html
-GST_DEBUG=3,Kurento*:4,kms*:4
-GST_DEBUG_NO_COLOR=1
-ARGS="-d /var/log/kurento -n 5"
