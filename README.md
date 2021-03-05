@@ -1,6 +1,6 @@
 ### Building Kurento on CentOS 7
 
-**Kurento 6.15.0**
+**Kurento 6.16.0**
 
 Kurento depends on several custom libraries and tools such as Boost 1.55 and a customized version of Gstreamer. To avoid possible conflicts with system libraries and tools, some Kurento dependencies are built and installed under `/opt/kms` folder.
 
@@ -14,16 +14,16 @@ Kurento depends on several custom libraries and tools such as Boost 1.55 and a c
 
 	```
 	cd Kurento-docker-el7
-	./build-kurento.sh 6.15.0
+	./build-kurento.sh 6.16.0
 	```
 
-3. All RPM packages are saved to `6.15.0/RPMS` folder.
+3. All RPM packages are saved to `6.16.0/RPMS` folder.
 
 ### Installing Kurento on CentOS/RHEL 7
 
 1. Use **minimal** system installation
 
-2. Copy `6.15.0/RPMS` folder onto your target system under `/root/RPMS`
+2. Copy `6.16.0/RPMS` folder onto your target system under `/root/RPMS`
 
 3. Copy `install-kurento.sh` from this repository into `/root`
 

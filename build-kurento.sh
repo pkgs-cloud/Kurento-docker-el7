@@ -12,7 +12,7 @@ docker build -t rpm-build-kurento docker
 
 cd $1
 
-if [[ "$(docker ps -q -f name=kurento-build-deps)" == "" ]]; then
+if [[ "$(docker ps -qa -f name=kurento-build-deps)" == "" ]]; then
   docker run -d \
     -v $(pwd)/SPECS:/root/rpmbuild/SPECS \
     -v $(pwd)/RPMS:/root/rpmbuild/RPMS \
@@ -23,7 +23,7 @@ fi
 
 docker exec -it kurento-build-deps /root/scripts/build-deps.sh
 
-if [[ "$(docker ps -q -f name=kurento-build-rpms)" == "" ]]; then
+if [[ "$(docker ps -qa -f name=kurento-build-rpms)" == "" ]]; then
   docker run -d \
     -v $(pwd)/SPECS:/root/rpmbuild/SPECS \
     -v $(pwd)/RPMS:/root/rpmbuild/RPMS \

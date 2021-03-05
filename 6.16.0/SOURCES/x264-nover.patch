@@ -1,0 +1,11 @@
+--- ./configure.orig	2015-10-21 19:24:34.933238254 +0100
++++ ./configure	2015-10-21 19:25:53.907124640 +0100
+@@ -1236,7 +1236,7 @@ cat > x264_config.h << EOF
+ #define X264_CHROMA_FORMAT $config_chroma_format
+ EOF
+ 
+-${SRCPATH}/version.sh >> x264_config.h
++cat ${SRCPATH}/version.h >> ${SRCPATH}/x264_config.h
+ 
+ if [ "$cli_libx264" = "system" ] ; then
+     if [ "$shared" = "yes" ]; then
