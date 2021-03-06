@@ -1,0 +1,95 @@
+From a2749a143097e46bda7c6b5f870f39e0e32763d6 Mon Sep 17 00:00:00 2001
+From: Igor Raits <i.gnatenko.brain@gmail.com>
+Date: Sun, 30 Aug 2020 18:18:20 +0200
+Subject: [PATCH] macros: Do not use %{shrink:}
+
+It is not supported by EL7 RPM.
+
+Signed-off-by: Igor Raits <i.gnatenko.brain@gmail.com>
+---
+ data/macros.meson | 66 +++++++++++++++++++++++------------------------
+ 1 file changed, 33 insertions(+), 33 deletions(-)
+
+diff --git a/data/macros.meson b/data/macros.meson
+index cc4953c5f..657f2b493 100644
+--- a/data/macros.meson
++++ b/data/macros.meson
+@@ -4,42 +4,42 @@
+ 
+ %meson \
+     %set_build_flags \
+-    %{shrink:%{__meson} \
+-        --buildtype=plain \
+-        --prefix=%{_prefix} \
+-        --libdir=%{_libdir} \
+-        --libexecdir=%{_libexecdir} \
+-        --bindir=%{_bindir} \
+-        --sbindir=%{_sbindir} \
+-        --includedir=%{_includedir} \
+-        --datadir=%{_datadir} \
+-        --mandir=%{_mandir} \
+-        --infodir=%{_infodir} \
+-        --localedir=%{_datadir}/locale \
+-        --sysconfdir=%{_sysconfdir} \
+-        --localstatedir=%{_localstatedir} \
+-        --sharedstatedir=%{_sharedstatedir} \
+-        --wrap-mode=%{__meson_wrap_mode} \
+-        --auto-features=%{__meson_auto_features} \
+-        %{_vpath_srcdir} %{_vpath_builddir} \
+-        %{nil}}
++    %{__meson} \\\
++        --buildtype=plain \\\
++        --prefix=%{_prefix} \\\
++        --libdir=%{_libdir} \\\
++        --libexecdir=%{_libexecdir} \\\
++        --bindir=%{_bindir} \\\
++        --sbindir=%{_sbindir} \\\
++        --includedir=%{_includedir} \\\
++        --datadir=%{_datadir} \\\
++        --mandir=%{_mandir} \\\
++        --infodir=%{_infodir} \\\
++        --localedir=%{_datadir}/locale \\\
++        --sysconfdir=%{_sysconfdir} \\\
++        --localstatedir=%{_localstatedir} \\\
++        --sharedstatedir=%{_sharedstatedir} \\\
++        --wrap-mode=%{__meson_wrap_mode} \\\
++        --auto-features=%{__meson_auto_features} \\\
++        %{_vpath_srcdir} %{_vpath_builddir} \\\
++        %{nil}
+ 
+ %meson_build \
+-    %{shrink:%{__meson} compile \
+-        -C %{_vpath_builddir} \
+-        -j %{_smp_build_ncpus} \
+-        --verbose \
+-        %{nil}}
++    %{__meson} compile \\\
++        -C %{_vpath_builddir} \\\
++        -j %{_smp_build_ncpus} \\\
++        --verbose \\\
++        %{nil}
+ 
+ %meson_install \
+-    %{shrink:DESTDIR=%{buildroot} %{__meson} install \
+-        -C %{_vpath_builddir} \
+-        --no-rebuild \
+-        %{nil}}
++    DESTDIR=%{buildroot} %{__meson} install \\\
++        -C %{_vpath_builddir} \\\
++        --no-rebuild \\\
++        %{nil}
+ 
+ %meson_test \
+-    %{shrink:%{__meson} test \
+-        -C %{_vpath_builddir} \
+-        --num-processes %{_smp_build_ncpus} \
+-        --print-errorlogs \
+-        %{nil}}
++    %{__meson} test \\\
++        -C %{_vpath_builddir} \\\
++        --num-processes %{_smp_build_ncpus} \\\
++        --print-errorlogs \\\
++        %{nil}
+-- 
+2.28.0
+

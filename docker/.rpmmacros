@@ -1,2 +1,3 @@
-%_topdir      %(echo $HOME)/rpmbuild
+%_topdir %(echo $HOME)/rpmbuild
 %rpmmacrodir /usr/lib/rpm/macros.d
+%dist .el7

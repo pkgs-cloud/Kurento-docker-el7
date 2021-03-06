@@ -1,0 +1,4 @@
+%_topdir      %(echo $HOME)/rpmbuild
+%rpmmacrodir /usr/lib/rpm/macros.d
+%dist .amzn2
+%python_provide Provides: 

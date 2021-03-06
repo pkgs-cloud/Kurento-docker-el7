@@ -64,7 +64,7 @@ sed -i 's/gstreamer-check-1.0/gstreamer-check-1.5/g' tests/meson.build
 %check
 export LD_RUN_PATH=%{_libdir}
 export LD_LIBRARY_PATH=%{_libdir}
-ninja -C builddir test
+ninja-build -C builddir test
 
 %build
 rm -rf builddir
@@ -75,10 +75,10 @@ export LD_LIBRARY_PATH=%{_libdir}
 
 meson configure -Dgstreamer=1
 meson builddir --prefix=%{_prefix} --libdir=%{_libdir}
-ninja -C builddir
+ninja-build -C builddir
 
 %install
-DESTDIR=$RPM_BUILD_ROOT ninja -C builddir install
+DESTDIR=$RPM_BUILD_ROOT ninja-build -C builddir install
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 mv $RPM_BUILD_ROOT%{_libdir}/gstreamer-1.0 $RPM_BUILD_ROOT%{_libdir}/gstreamer-1.5
 

@@ -78,7 +78,11 @@ BuildRequires: libstdc++-devel%{?_isa}
 BuildRequires: bzip2-devel%{?_isa}
 BuildRequires: zlib-devel%{?_isa}
 BuildRequires: python-devel%{?_isa}
+%if 0%{?amzn2}
+BuildRequires: libicu60-devel%{?_isa}
+%else
 BuildRequires: libicu-devel%{?_isa}
+%endif
 
 # https://svn.boost.org/trac/boost/ticket/6150
 Patch4: boost-1.50.0-fix-non-utf8-files.patch
@@ -393,7 +397,11 @@ Summary: The Boost C++ headers and shared development libraries
 Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
 Provides: %{name}-python-devel = %{version}-%{release}
+%if 0%{?amzn2}
+Requires: libicu60-devel%{?_isa}
+%else
 Requires: libicu-devel%{?_isa}
+%endif
 
 %description devel
 Headers and shared object symbolic links for the Boost C++ libraries.
@@ -1318,7 +1326,7 @@ rm -rf $RPM_BUILD_ROOT
 - Drop obsolete Obsoletes: boost-python and boost-doc <= 1.30.2
 
 * Tue Jan 12 2010 Benjamin Kosnik <bkoz@redhat.com> - 1.41.0-1
-- Don't package generated debug libs, even with 
+- Don't package generated debug libs, even with
   (-DCMAKE_BUILD_TYPE=RelWithDebInfo | Release).
 - Update and include boost-cmake-soname.patch.
 - Uncomment ctest.

@@ -11,8 +11,8 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-alias rpmbb='rpmbuild -bb --define="dist .el7"'
-alias rpmbs='rpmbuild -bs --define="dist .el7"'
+alias rpmbb='rpmbuild -bb'
+alias rpmbs='rpmbuild -bs'
 alias yumi='yum install -y'
 alias yumr='yum reinstall -y'
 alias yume='yum erase -y'

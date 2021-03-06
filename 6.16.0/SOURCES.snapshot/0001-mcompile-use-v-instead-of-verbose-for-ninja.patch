@@ -1,0 +1,28 @@
+From c466054902dde6ecf353d6f4a22a6c878fd6dd6f Mon Sep 17 00:00:00 2001
+From: Igor Raits <i.gnatenko.brain@gmail.com>
+Date: Sun, 30 Aug 2020 18:17:26 +0200
+Subject: [PATCH] mcompile: use -v instead of --verbose for ninja
+
+The `--verbose` has been added to ninja in 1.9.0 and we pretend that we have compatibility with Ninja 1.7+.
+
+References: https://github.com/ninja-build/ninja/commit/bf7517505ad1def03e13bec2b4131399331bc5c4
+---
+ mesonbuild/mcompile.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mesonbuild/mcompile.py b/mesonbuild/mcompile.py
+index 9fe3a65f5..5352143d9 100644
+--- a/mesonbuild/mcompile.py
++++ b/mesonbuild/mcompile.py
+@@ -156,7 +156,7 @@ def get_parsed_args_ninja(options: 'argparse.Namespace', builddir: Path) -> T.Li
+         cmd.extend(['-l', str(options.load_average)])
+ 
+     if options.verbose:
+-        cmd.append('--verbose')
++        cmd.append('-v')
+ 
+     cmd += options.ninja_args
+ 
+-- 
+2.28.0
+

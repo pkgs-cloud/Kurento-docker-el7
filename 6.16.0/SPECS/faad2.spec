@@ -76,6 +76,7 @@ for f in AUTHORS COPYING ChangeLog NEWS README* TODO ; do
 done
 
 %build
+export CFLAGS=-std=gnu89
 %configure \
     --disable-static \
     --with-xmms \
@@ -286,5 +287,5 @@ sed -i.rpath 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 * Sat Apr 12 2003 Dams <anvil[AT]livna.org> 0:1.1-0.fdr.2
 - Typo in devel Requires.
 
-* Sat Apr 12 2003 Dams <anvil[AT]livna.org> 
+* Sat Apr 12 2003 Dams <anvil[AT]livna.org>
 - Initial build.
