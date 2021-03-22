@@ -40,9 +40,13 @@ yumbd libva.spec
 rpmbb libva.spec
 yumi ../RPMS/x86_64/libva-1.8.3-1.*.x86_64.rpm ../RPMS/x86_64/libva-devel-1.8.3-1.*.x86_64.rpm
 
+yumbd opus.spec
+rpmbb opus.spec
+yumi ../RPMS/x86_64/opus-1.1.3-1.*.x86_64.rpm ../RPMS/x86_64/opus-devel-1.1.3-1.*.x86_64.rpm
+
 yumbd ffmpeg.spec
 rpmbb ffmpeg.spec
-yumi ../RPMS/x86_64/ffmpeg-libs-3.4.8-1.*.x86_64.rpm ../RPMS/x86_64/libavdevice-3.4.8-1.*.x86_64.rpm ../RPMS/x86_64/ffmpeg-devel-3.4.8-1.*.x86_64.rpm
+yumi ../RPMS/x86_64/ffmpeg-libs-4.2.4-1.*.x86_64.rpm ../RPMS/x86_64/libavdevice-4.2.4-1.*.x86_64.rpm ../RPMS/x86_64/ffmpeg-devel-4.2.4-1.*.x86_64.rpm
 
 yumbd gpac.spec
 rpmbb gpac.spec
@@ -60,10 +64,6 @@ yumi ../RPMS/x86_64/libde265-1.0.2-6.*.x86_64.rpm ../RPMS/x86_64/libde265-devel-
 yumbd automake.spec
 rpmbb automake.spec
 yumi ../RPMS/noarch/automake-1.15-9.*.noarch.rpm
-
-yumbd opus.spec
-rpmbb opus.spec
-yumi ../RPMS/x86_64/opus-1.1.3-1.*.x86_64.rpm ../RPMS/x86_64/opus-devel-1.1.3-1.*.x86_64.rpm
 
 yumbd rtmpdump.spec
 rpmbb rtmpdump.spec
