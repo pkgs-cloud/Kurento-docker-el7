@@ -19,3 +19,5 @@ yum install coturn -y
 yum install --disablerepo=* --enablerepo=kurento-local opus -y
 
 yum install --enablerepo=kurento-local kms -y
+
+yum install --enablerepo=kurento-local freeswitch -y
