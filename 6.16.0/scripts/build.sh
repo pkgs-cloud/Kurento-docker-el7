@@ -18,7 +18,7 @@ yumi kms-boost kms-boost-atomic kms-boost-context kms-boost-coroutine kms-boost-
 
 yumi automake --disablerepo=* --enablerepo=kurento
 yumi libogg-devel
-yumi opus-devel --disablerepo=* --enablerepo=kurento
+yumi opus-devel libvpx-devel --disablerepo=* --enablerepo=kurento
 
 cd /root/rpmbuild/SPECS
 
