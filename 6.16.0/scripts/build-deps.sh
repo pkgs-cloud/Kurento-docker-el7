@@ -44,6 +44,10 @@ yumbd opus.spec
 rpmbb opus.spec
 yumi ../RPMS/x86_64/opus-1.1.3-1.*.x86_64.rpm ../RPMS/x86_64/opus-devel-1.1.3-1.*.x86_64.rpm
 
+yumbd libvpx.spec
+rpmbb libvpx.spec
+yumi ../RPMS/x86_64/libvpx-1.7.0-8.amzn2.x86_64.rpm ../RPMS/x86_64/libvpx-devel-1.7.0-8.amzn2.x86_64.rpm
+
 yumbd ffmpeg.spec
 rpmbb ffmpeg.spec
 yumi ../RPMS/x86_64/ffmpeg-libs-4.2.4-1.*.x86_64.rpm ../RPMS/x86_64/libavdevice-4.2.4-1.*.x86_64.rpm ../RPMS/x86_64/ffmpeg-devel-4.2.4-1.*.x86_64.rpm

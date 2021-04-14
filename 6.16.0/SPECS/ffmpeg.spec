@@ -11,9 +11,9 @@
 %global _without_aom      1
 %global _without_dav1d    1
 %global _without_frei0r   1
-%global _without_opus     0
+%global _without_opus
 %global _without_srt      1
-%global _without_vpx      0
+%global _without_vpx      
 %endif
 
 %if 0%{?fedora} || 0%{?rhel} > 7
